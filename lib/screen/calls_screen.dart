@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,9 +20,9 @@ class _CallsScreenState extends State<CallsScreen> {
     for (int index = 0; index < theObject.length; index++) {
       var define = theObject[index]['user']['picture']['large'];
       print(define);
+      print(imageList.length);
       imageList.add(define);
     }
-    return imageList;
   }
 
   @override
@@ -36,32 +35,37 @@ class _CallsScreenState extends State<CallsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.0,
-      color: Colors.white30,
       child: FutureBuilder(
         future: callsImage(),
         builder: (BuildContext, snapshot) {
-          return GridView.count(
-              crossAxisCount: 3,
-              childAspectRatio: 1.0,
-              padding: EdgeInsets.all(4.0),
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
-              children: imageList.map((String url) {
-                return Stack(
-                  children: [
-                    Container(
-                      child: GridTile(
-                        child: Image.network(url, fit: BoxFit.cover),
-                      ),
+          return Container(
+            color: Colors.black,
+            child: GridView.count(
+                crossAxisCount: 3,
+                childAspectRatio: 1.0,
+                mainAxisSpacing: 1,
+                crossAxisSpacing: 1,
+                children: imageList.map((String url) {
+                  return Container(
+                    padding: EdgeInsets.zero,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          child: GridTile(
+                            child: Image.network(url, fit: BoxFit.cover),
+                          ),
+                        ),
+                        Text(
+                          'User name',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'User name',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                );
-              }).toList());
+                  );
+                }).toList()),
+          );
         },
       ),
     );

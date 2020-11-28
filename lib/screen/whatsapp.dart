@@ -71,18 +71,3 @@ class _WhatsAppState extends State<WhatsApp> {
     );
   }
 }
-
-class MyDrawer extends StatefulWidget {
-  @override
-  _MyDrawerState createState() => _MyDrawerState();
-}
-
-class _MyDrawerState extends State<MyDrawer> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: Text('hello friend'),
-    );
-  }
-}
