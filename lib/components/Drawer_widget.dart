@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/components/drawer_button_widget.dart';
 
 Widget DrawerWidget() {
   return ListView(
@@ -6,22 +7,69 @@ Widget DrawerWidget() {
     padding: EdgeInsets.zero,
     children: <Widget>[
       DrawerHeader(
-        child: Text('Drawer Header'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Drawer Header',
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            )
+          ],
+        ),
         decoration: BoxDecoration(
-          color: Colors.blue,
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://loremflickr.com/cache/resized/65535_50433897778_3ee8414717_320_240_nofilter.jpg'),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
-      ListTile(
-        title: Text('Item 1'),
-        onTap: () {
-          // Update the state of the app
-          // ...
-          // Then close the drawer
-        },
+      Container(
+        height: 350.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ListTile(
+              onTap: () {},
+              title: DrawerButtonWidget(Icons.star, 'Favorite'),
+            ),
+            ListTile(
+              onTap: () {},
+              title: DrawerButtonWidget(Icons.info, 'Status'),
+            ),
+            ListTile(
+              onTap: () {},
+              title: DrawerButtonWidget(Icons.person_rounded, 'Profile'),
+            ),
+            ListTile(
+              onTap: () {},
+              title: DrawerButtonWidget(Icons.settings, 'Settings'),
+            ),
+          ],
+        ),
       ),
-      ListTile(
-        title: Text('Item 2'),
-        onTap: () {},
+      Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: FlatButton(
+                onPressed: () {},
+                child: Text(
+                  'About',
+                ),
+              ),
+            ),
+            Container(
+              child: FlatButton(
+                onPressed: () {},
+                child: Text('Feed back'),
+              ),
+            ),
+          ],
+        ),
       ),
     ],
   );

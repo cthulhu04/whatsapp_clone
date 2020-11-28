@@ -4,6 +4,8 @@ import 'package:whatsapp_clone/constants/color_constants.dart';
 import 'package:whatsapp_clone/constants/constant_tools.dart';
 import 'dart:async';
 
+import 'package:whatsapp_clone/screen/calls_screen.dart';
+
 class WhatsApp extends StatefulWidget {
   @override
   _WhatsAppState createState() => _WhatsAppState();
@@ -49,9 +51,7 @@ class _WhatsAppState extends State<WhatsApp> {
         ),
         body: TabBarView(
           children: [
-            Icon(
-              Icons.directions_car,
-            ),
+            CallsScreen(),
             Icon(Icons.directions_transit),
             Icon(Icons.directions_bike),
             Icon(Icons.directions_bike),
