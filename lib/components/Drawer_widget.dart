@@ -19,8 +19,7 @@ Widget DrawerWidget() {
         ),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(
-                'https://loremflickr.com/cache/resized/65535_50433897778_3ee8414717_320_240_nofilter.jpg'),
+            image: AssetImage('./images/42.jpg'),
             fit: BoxFit.cover,
           ),
         ),

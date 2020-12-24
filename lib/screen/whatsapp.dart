@@ -1,25 +1,44 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/components/Drawer_widget.dart';
 import 'package:whatsapp_clone/constants/color_constants.dart';
-import 'package:whatsapp_clone/constants/constant_tools.dart';
-import 'dart:async';
-
 import 'package:whatsapp_clone/screen/calls_screen.dart';
+import 'package:whatsapp_clone/screen/contact_screen.dart';
+import 'package:whatsapp_clone/screen/groups_screen.dart';
+import 'package:whatsapp_clone/screen/message_screen.dart';
+import 'package:whatsapp_clone/data/firestore.dart';
+import 'package:whatsapp_clone/constants/constant_tools.dart';
 
 class WhatsApp extends StatefulWidget {
   @override
   _WhatsAppState createState() => _WhatsAppState();
 }
 
-class _WhatsAppState extends State<WhatsApp> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class _WhatsAppState extends State<WhatsApp>
+    with SingleTickerProviderStateMixin {
+  final Firestore _firestore = Firestore();
   TabController _tabController;
+  int _selectedIndex = 0;
 
-  List<IconData> changFloatBtnIcons = [
-    Icons.phone,
-    Icons.chat,
-    Icons.add_outlined,
+  List<IconData> listIcon = [
+    FontAwesomeIcons.phone,
+    FontAwesomeIcons.comments,
+    FontAwesomeIcons.plus,
+    FontAwesomeIcons.plus,
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(length: listIcon.length, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        _selectedIndex = _tabController.index;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +61,36 @@ class _WhatsAppState extends State<WhatsApp> {
           bottom: TabBar(
             controller: _tabController,
             tabs: [
-              Tab(child: Text('calls')),
-              Tab(child: Text('chats')),
-              Tab(child: Text('groups')),
-              Tab(child: Text('contact')),
+              Tab(
+                  child: Text(
+                'calls',
+                style: appBarTextStyle,
+              )),
+              Tab(
+                  child: Text(
+                'chats',
+                style: appBarTextStyle,
+              )),
+              Tab(
+                  child: Text(
+                'groups',
+                style: appBarTextStyle,
+              )),
+              Tab(
+                  child: Text(
+                'contact',
+                style: appBarTextStyle,
+              )),
             ],
           ),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: [
             CallsScreen(),
-            Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
-            Icon(Icons.directions_bike),
+            MessageScreen(),
+            GroupScreen(),
+            ContactScreen(),
           ],
         ),
         drawer: Drawer(
@@ -63,9 +99,9 @@ class _WhatsAppState extends State<WhatsApp> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: mainColor,
           onPressed: () {
-            // Add your onPressed code here!
+            // Add your onPressed code here
           },
-          child: Icon(Icons.navigation),
+          child: FaIcon(listIcon[_selectedIndex]),
         ),
       ),
     );

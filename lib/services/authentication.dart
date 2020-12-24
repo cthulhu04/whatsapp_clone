@@ -6,17 +6,19 @@ class Auth {
   // signin function
   Future signIn(String email, String password) async {
     try {
-      return await _firebaseAuth.signInWithEmailAndPassword(
+      UserCredential user = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      return user;
     } catch (e) {
       print('sign in error message: $e');
     }
   }
 
   // create user with email and password
-  Future createUserAccount(String email, String password) async {
+  Future<UserCredential> createUserAccount(
+      String email, String password) async {
     try {
       return await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,

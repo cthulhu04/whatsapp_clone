@@ -37,9 +37,8 @@ class _CallsScreenState extends State<CallsScreen> {
     return Container(
       child: FutureBuilder(
         future: callsImage(),
-        builder: (BuildContext, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
           return Container(
-            color: Colors.black,
             child: GridView.count(
                 crossAxisCount: 3,
                 childAspectRatio: 1.0,
@@ -47,7 +46,7 @@ class _CallsScreenState extends State<CallsScreen> {
                 crossAxisSpacing: 1,
                 children: imageList.map((String url) {
                   return Container(
-                    padding: EdgeInsets.zero,
+                    color: Colors.black,
                     child: Stack(
                       fit: StackFit.expand,
                       alignment: Alignment.center,
@@ -57,9 +56,17 @@ class _CallsScreenState extends State<CallsScreen> {
                             child: Image.network(url, fit: BoxFit.cover),
                           ),
                         ),
-                        Text(
-                          'User name',
-                          style: TextStyle(color: Colors.white),
+                        Stack(
+                          alignment: Alignment.bottomLeft,
+                          children: [
+                            Text(
+                              'User name',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.2,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

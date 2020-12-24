@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: FutureBuilder(
           future: _firebaseApp,
-          builder: (BuildContext, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
             if (snapshot.hasError) {
               return Center(
                 child: Text('hs error ${snapshot.hasError}'),
@@ -31,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
             if (snapshot.connectionState == ConnectionState.done) {
               return LoginWidget();
+            } else {
+              return CircularProgressIndicator();
             }
           },
         ),
@@ -132,7 +135,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     children: [
                       FlatButton(
                         onPressed: () async {
-                          dynamic user = Auth()
+                          Auth()
                               .signIn(email, password)
                               .then((value) => {
                                     if (value != null)
@@ -144,6 +147,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           ),
                                         )
                                       }
+                                    // else if (value ==
+                                    //     null) // user only when is no connection
+                                    //   {
+                                    //     Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             WhatsApp(value),
+                                    //       ),
+                                    //     )
+                                    //   }
                                   })
                               .catchError(
                                 (onError) => print('message $onError'),
