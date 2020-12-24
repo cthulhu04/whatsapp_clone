@@ -13,12 +13,6 @@ class Message extends StatefulWidget {
 }
 
 class _MessageState extends State<Message> {
-  // Widget messageBubble(List<dynamic> msg) {
-  //   return msg != null
-  //       ?
-  //       : null;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,13 +86,3 @@ class _MessageState extends State<Message> {
     );
   }
 }
-
-// [
-// messageBubble(widget.name),
-// ]
-
-// message
-//     .map(
-// (msg) => bubbleMessage(msg['message']),
-// )
-// .toList(),
