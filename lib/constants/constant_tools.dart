@@ -7,3 +7,8 @@ const TextStyle contactStyle = TextStyle(
   fontSize: 18.0,
   color: mainColor,
 );
+
+const TextStyle loginStyle = TextStyle(
+  fontSize: 18.0,
+  fontWeight: FontWeight.w800,
+);

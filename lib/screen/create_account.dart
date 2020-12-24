@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/components/submit_button.dart';
 import 'package:whatsapp_clone/constants/color_constants.dart';
+import 'package:whatsapp_clone/constants/constant_tools.dart';
+import 'package:whatsapp_clone/screen/whatsapp.dart';
 import 'package:whatsapp_clone/services/authentication.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -12,7 +15,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   String email = '';
   String password = '';
 
-  final _formKey = GlobalKey<FormState>();
+  Future createAccount({String email, String password}) async {
+    return Auth()
+        .createUserAccount(email, password)
+        .then((value) => {
+              if (value != null)
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WhatsApp(),
+                    ),
+                  )
+                }
+            })
+        .then((value) => print('create account is success...'))
+        .catchError(
+          (onError) => print('message $onError'),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +42,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       body: SafeArea(
         child: FutureBuilder(
           future: Firebase.initializeApp(),
-          builder: (BuildContext, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
             return Column(
               children: [
                 Container(
                   height: 200.0,
                   child: Center(
                     child: Text(
-                      'Welcome Logo',
+                      'Create Account',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 23.0,
@@ -55,7 +76,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       child: ListView(
                         children: [
                           Center(
-                            child: Text('Username or email'),
+                            child: Text('email', style: loginStyle),
                           ),
                           SizedBox(height: 20.0),
                           Padding(
@@ -71,12 +92,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               ),
                               onChanged: (val) {
                                 email = val;
-                                print(val);
                               },
                             ),
                           ),
                           SizedBox(height: 20.0),
-                          Center(child: Text('password')),
+                          Center(child: Text('password', style: loginStyle)),
                           SizedBox(height: 20.0),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -92,42 +112,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               ),
                               onChanged: (val) {
                                 password = val;
-                                print(val);
                               },
                             ),
                           ),
                           SizedBox(height: 20.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FlatButton(
-                                onPressed: () async {
-                                  return Auth()
-                                      .createUserAccount(email, password)
-                                      .then((value) => {
-                                            if (value != null)
-                                              {
-                                                print(
-                                                    'sign in account is success..')
-                                              }
-                                          })
-                                      .catchError(
-                                        (onError) => print('message $onError'),
-                                      );
-                                },
-                                color: Colors.red,
-                                child: Text('login'),
-                              ),
-                              SizedBox(width: 20.0),
-                              FlatButton(
-                                onPressed: () async {
-                                  return Auth().LogOut();
-                                },
-                                color: Colors.red,
-                                child: Text('logout'),
-                              ),
-                            ],
-                          ),
+                          Center(
+                            child: SubmitButton(
+                              title: 'Create Account',
+                              function: () => createAccount(
+                                  email: this.email, password: this.password),
+                            ),
+                          )
                         ],
                       ),
                     ),

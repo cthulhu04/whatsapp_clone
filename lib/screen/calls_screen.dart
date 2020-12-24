@@ -19,8 +19,6 @@ class _CallsScreenState extends State<CallsScreen> {
 
     for (int index = 0; index < theObject.length; index++) {
       var define = theObject[index]['user']['picture']['large'];
-      print(define);
-      print(imageList.length);
       imageList.add(define);
     }
   }
