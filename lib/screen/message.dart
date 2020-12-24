@@ -69,9 +69,7 @@ class _MessageState extends State<Message> {
                   Container(
                     width: 300,
                     child: TextFormField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.red,
-                      ),
+                      decoration: InputDecoration(hintText: 'message'),
                       onChanged: (val) {
                         print(val);
                       },
